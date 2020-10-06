@@ -1,37 +1,26 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "punch2prime",
   "version": "${version}",
 
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "Punch 2 Prime",
+  "description": "A one-mixin mod to emulate pre-Beta 1.7 TNT behaviour!",
   "authors": [
-    "Me!"
+    "NeRd"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://github.com/NeRdTheNed/Punch2Prime",
+    "sources": "https://github.com/NeRdTheNed/Punch2Prime"
   },
 
   "license": "CC0-1.0",
-  "icon": "assets/modid/icon.png",
-
-  "environment": "*",
-  "entrypoints": {
-    "main": [
-      "net.fabricmc.example.ExampleMod"
-    ]
-  },
+  "icon": "assets/punch2prime/icon.png",
+  
   "mixins": [
-    "modid.mixins.json"
+    "punch2prime.mixins.json"
   ],
 
   "depends": {
-    "fabricloader": ">=0.7.4",
-    "fabric": "*",
-    "minecraft": "1.16.x"
-  },
-  "suggests": {
-    "flamingo": "*"
+    "fabricloader": ">=0.7.4"
   }
 }
