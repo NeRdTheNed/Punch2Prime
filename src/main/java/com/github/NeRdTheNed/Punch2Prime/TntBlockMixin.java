@@ -1,6 +1,7 @@
 package com.github.NeRdTheNed.Punch2Prime;
 
 import net.minecraft.block.TntBlock;
+import net.minecraft.state.property.Property;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
