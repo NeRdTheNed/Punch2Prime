@@ -6,10 +6,8 @@ name: fabric-1.16 - Draft release
 on:
   push:
     # Sequence of patterns matched against refs/tags
-    branches:
-    - fabric-1.16 # Match only this branch
-      tags:
-      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+    branches: fabric-1.16 # Match only this branch
+      tags: 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
 
 jobs:
   build:
