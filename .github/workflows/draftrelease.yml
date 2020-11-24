@@ -37,8 +37,8 @@ jobs:
       run: ./gradlew build
     - name: Run strip-nondeterminism on built .jar files
       run: strip-nondeterminism build/libs/*.jar
-    - name: Run advzip (-i 999) on built .jar files
-      run: advzip --shrink-insane -kzi 999 -p build/libs/*.jar
+    - name: Run advzip (-i 99999) on built .jar files
+      run: advzip --shrink-insane -kzi 99999 -p build/libs/*.jar
     - name: Draft release
       id: create_release
       uses: actions/create-release@v1
