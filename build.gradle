@@ -1,21 +1,21 @@
 plugins {
-	id 'fabric-loom' version '0.5-SNAPSHOT'
+	id 'fabric-loom' version '0.9-SNAPSHOT'
 	id 'maven-publish'
 }
 
-// Defines a Java 8 compatible JDK.
+// Defines a Java 16 compatible JDK.
 def compiler = javaToolchains.compilerFor {
-	languageVersion = JavaLanguageVersion.of(8)
+	languageVersion = JavaLanguageVersion.of(16)
 }
 
-// Tells Gradle to use the previously defined Java 8 compatible JDK.
+// Tells Gradle to use the previously defined Java 16 compatible JDK.
 java {
 	toolchain {
 		compiler
 	}
 }
 
-// Tells Gradle to always compile with the previously defined Java 8 compatible JDK.
+// Tells Gradle to always compile with the previously defined Java 16 compatible JDK.
 tasks.withType(JavaCompile).configureEach {
 	javaCompiler = compiler
 }
