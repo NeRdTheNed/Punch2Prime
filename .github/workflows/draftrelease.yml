@@ -35,6 +35,8 @@ jobs:
       run: chmod +x gradlew
     - name: Build with Gradle
       run: ./gradlew build
+    - name: Rezip mod .jar files to remove directory entries
+      run: bash removeDirectoryEntries.sh
     - name: Run strip-nondeterminism on built .jar files
       run: strip-nondeterminism build/libs/*.jar
     - name: Run advzip (-i 99999) on built .jar files
