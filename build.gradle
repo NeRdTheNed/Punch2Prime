@@ -4,34 +4,31 @@ buildscript {
 		google()
 	}
 	dependencies {
-		// FIXME ProGuard 7.1.1 is bugged.
-		// Java 16 class files are marked as using experimental features even when they're not.
-		// For some reason, this doesn't seem to phase the Fabric loader?
-		// Replace with a newer version as soon as it releases.
-		classpath 'com.guardsquare:proguard-gradle:7.1.1'
+		// FIXME Replace with a newer version as soon as it releases.
+		classpath 'com.guardsquare:proguard-gradle:7.2.0-beta2'
 	}
 }
 
 plugins {
 	// TODO This buildscript currently depends on some implementation details of Loom due to dumb ProGuard stuff
 	// The version of Loom used will probably be able to be updated without any issues.
-	id 'fabric-loom' version '0.9.46'
+	id 'fabric-loom' version '0.10.64'
 	id 'maven-publish'
 }
 
-// Defines a Java 16 compatible JDK.
+// Defines a Java 17 compatible JDK.
 def compiler = javaToolchains.compilerFor {
-	languageVersion = JavaLanguageVersion.of(16)
+	languageVersion = JavaLanguageVersion.of(17)
 }
 
-// Tells Gradle to use the previously defined Java 16 compatible JDK.
+// Tells Gradle to use the previously defined Java 17 compatible JDK.
 java {
 	toolchain {
 		compiler
 	}
 }
 
-// Tells Gradle to always compile with the previously defined Java 16 compatible JDK.
+// Tells Gradle to always compile with the previously defined Java 17 compatible JDK.
 tasks.withType(JavaCompile).configureEach {
 	javaCompiler = compiler
 }
@@ -98,7 +95,7 @@ task ('proguard', type: proguard.gradle.ProGuardTask) {
 	dependsOn "unmappedJar"
 	verbose
 
-	target "16"
+	target "17"
 
 	// Workaround for ProGuard seemingly not recognising when the output .jar file doesn't exist
 	outputs.upToDateWhen { false }
