@@ -15,34 +15,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Set up JDK 17
-      uses: actions/setup-java@v1
+      uses: actions/setup-java@v3
       with:
+        distribution: 'zulu'
         java-version: 17
     - name: Install advancecomp
       run: sudo apt-get install advancecomp
     - name: Install strip-nondeterminism
       run: sudo apt-get install strip-nondeterminism
-    - uses: actions/cache@v2
-      with:
-        path: |
-          ~/.gradle/caches
-          ~/.gradle/wrapper
-        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-        restore-keys: |
-          ${{ runner.os }}-gradle-
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
     - name: Build with Gradle
-      run: ./gradlew build
+      uses: gradle/gradle-build-action@v2
+      with:
+        gradle-version: wrapper
+        cache-read-only: ${{ github.ref != 'refs/heads/fabric-1.19' }}
+        arguments: build --stacktrace --warning-mode all
     - name: Rezip mod .jar files to remove directory entries
       run: bash removeDirectoryEntries.sh
     - name: Run strip-nondeterminism on built .jar files
       run: strip-nondeterminism build/libs/*.jar
     - name: Run advzip (-i 999) on built .jar files
       run: advzip --shrink-insane -kzi 999 -p build/libs/*.jar
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
         name: Package
         path: build/libs
