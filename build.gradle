@@ -1,63 +1,47 @@
 plugins {
-	id 'fabric-loom' version '0.5-SNAPSHOT'
+	id 'fabric-loom' version "0.12-SNAPSHOT" // To use chocoloom, change the version to a commit hash
 	id 'maven-publish'
 }
 
-// Defines a Java 8 compatible JDK.
-def compiler = javaToolchains.compilerFor {
-	languageVersion = JavaLanguageVersion.of(8)
-}
-
-// Tells Gradle to use the previously defined Java 8 compatible JDK.
-java {
-	toolchain {
-		compiler
-	}
-}
-
-// Tells Gradle to always compile with the previously defined Java 8 compatible JDK.
-tasks.withType(JavaCompile).configureEach {
-	javaCompiler = compiler
-}
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
 
 archivesBaseName = project.archives_base_name
 version = project.mod_version + "-" + project.minecraft_version
 group = project.maven_group
 
 repositories {
-	mavenCentral()
-	jcenter()
 	maven {
-		name = 'Fabric'
-		url = 'http://maven.fabricmc.net/'
-	}
-	maven {
-		name = 'SpongePowered'
-		url = 'http://repo.spongepowered.org/maven'
-	}
-	maven {
-		name = 'mojang'
-		url = 'https://libraries.minecraft.net/'
-	}
-	maven {
-		name = 'legacy-fabric'
-		url = 'https://dl.bintray.com/legacy-fabric/Legacy-Fabric-Maven'
+		name = "legacy-fabric"
+		url = "https://maven.legacyfabric.net"
 	}
 }
 
-minecraft {
-	intermediaryUrl = {
-		return "https://dl.bintray.com/legacy-fabric/Legacy-Fabric-Maven/net/fabricmc/intermediary/" + it + "/intermediary-" + it + "-v2.jar";
-	}
+loom {
+	setIntermediaryUrl('https://maven.legacyfabric.net/net/fabricmc/intermediary/%1$s/intermediary-%1$s-v2.jar');
 }
 
 dependencies {
-	//to change the versions see the gradle.properties file
-	implementation "com.google.guava:guava:23.5-jre"
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-	modImplementation ("net.fabricmc:fabric-loader-1.8.9:${project.loader_version}") {
-		exclude module: "guava"
+	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+
+	if (System.getProperty("os.name").toLowerCase().contains("mac")) {
+		implementation 'org.lwjgl.lwjgl:lwjgl_util:2.9.4-nightly-20150209'
+		implementation 'org.lwjgl.lwjgl:lwjgl:2.9.4-nightly-20150209'
+		implementation 'org.lwjgl.lwjgl:lwjgl-platform:2.9.4-nightly-20150209'
+	}
+}
+
+if (System.getProperty("os.name").toLowerCase().contains("mac")) {
+	configurations.all {
+		resolutionStrategy {
+			dependencySubstitution {
+				substitute module('org.lwjgl.lwjgl:lwjgl_util:2.9.2-nightly-201408222') with module('org.lwjgl.lwjgl:lwjgl_util:2.9.4-nightly-20150209')
+				substitute module('org.lwjgl.lwjgl:lwjgl:2.9.2-nightly-201408222') with module('org.lwjgl.lwjgl:lwjgl:2.9.4-nightly-20150209')
+			}
+			force 'org.lwjgl.lwjgl:lwjgl-platform:2.9.4-nightly-20150209'
+		}
 	}
 }
 
