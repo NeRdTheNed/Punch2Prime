@@ -84,6 +84,7 @@ processResources {
 // see http://yodaconditions.net/blog/fix-for-java-file-encoding-problems-with-gradle.html
 tasks.withType(JavaCompile) {
 	options.encoding = "UTF-8"
+	options.debug = false
 }
 
 java {
@@ -91,12 +92,6 @@ java {
 	// if it is present.
 	// If you remove this line, sources will not be generated.
 	withSourcesJar()
-}
-
-jar {
-	from("LICENSE") {
-		rename { "${it}_${project.archivesBaseName}"}
-	}
 }
 
 // configure the maven publication
