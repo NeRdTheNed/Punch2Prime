@@ -49,7 +49,7 @@ public abstract class TntBlockMixin extends Block {
 
 	// Hack to make the TNT block always explode when punched, as setting it as the default state doesn't work.
 	// I've attempted to retain "compatibility" with other mods by checking if the block is specifically a TNT block, so any other blocks extending the TNT block shouldn't be affected.
-	@ModifyArg(method = "onBreakByPlayer(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/TntBlock;method_8932(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;Lnet/minecraft/entity/LivingEntity;)V"))
+	@ModifyArg(method = "onBreakByPlayer(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/TntBlock;activateTnt(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;Lnet/minecraft/entity/LivingEntity;)V"))
 	private BlockState modifyState(BlockState state) {
 		if (state.getBlock().isEqualTo(Blocks.TNT)) {
 			return state.with(TntBlock.EXPLODE, true);

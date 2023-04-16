@@ -1,5 +1,6 @@
 plugins {
-	id 'fabric-loom' version "0.12-SNAPSHOT" // To use chocoloom, change the version to a commit hash
+	id 'fabric-loom' version "1.1-SNAPSHOT"
+	id 'legacy-looming' version "1.1-SNAPSHOT" // Version must be the same as fabric-loom's
 	id 'maven-publish'
 }
 
@@ -13,7 +14,7 @@ group = project.maven_group
 repositories {
 	maven {
 		name = "legacy-fabric"
-		url = "https://maven.legacyfabric.net"
+		url = "https://repo.legacyfabric.net/repository/legacyfabric/"
 	}
 }
 
@@ -23,7 +24,7 @@ loom {
 
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+	mappings "net.legacyfabric:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
 	if (System.getProperty("os.name").toLowerCase().contains("mac")) {
