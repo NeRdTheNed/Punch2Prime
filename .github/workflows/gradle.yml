@@ -1,13 +1,13 @@
 # This workflow will build a Java project with Gradle
 # For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-gradle
 
-name: fabric-1.19 - Snapshot
+name: fabric-1.20 - Snapshot
 
 on:
   push:
-    branches: fabric-1.19
+    branches: fabric-1.20
   pull_request:
-    branches: fabric-1.19
+    branches: fabric-1.20
 
 jobs:
   build:
@@ -29,7 +29,7 @@ jobs:
       uses: gradle/gradle-build-action@v2
       with:
         gradle-version: wrapper
-        cache-read-only: ${{ github.ref != 'refs/heads/fabric-1.19' }}
+        cache-read-only: ${{ github.ref != 'refs/heads/fabric-1.20' }}
         arguments: build --stacktrace --warning-mode all
     - name: Rezip mod .jar files to remove directory entries
       run: bash removeDirectoryEntries.sh
