@@ -12,7 +12,7 @@ buildscript {
 plugins {
 	// TODO This buildscript currently depends on some implementation details of Loom due to dumb ProGuard stuff
 	// The version of Loom used will probably be able to be updated without any issues.
-	id 'fabric-loom' version '1.0-SNAPSHOT'
+	id 'fabric-loom' version '1.2-SNAPSHOT'
 	id 'maven-publish'
 }
 
