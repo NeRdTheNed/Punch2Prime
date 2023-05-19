@@ -25,6 +25,8 @@ jobs:
       run: sudo apt-get install advancecomp
     - name: Install strip-nondeterminism
       run: sudo apt-get install strip-nondeterminism
+    - name: Install jq
+      run: sudo apt-get install jq
     - name: Build with Gradle
       uses: gradle/gradle-build-action@v2
       with:

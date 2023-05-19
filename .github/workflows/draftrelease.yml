@@ -24,6 +24,8 @@ jobs:
       run: sudo apt-get install advancecomp
     - name: Install strip-nondeterminism
       run: sudo apt-get install strip-nondeterminism
+    - name: Install jq
+      run: sudo apt-get install jq
     - name: Build with Gradle
       env:
         BUILD_RELEASE: ${{ github.event.release.prerelease == false }}
