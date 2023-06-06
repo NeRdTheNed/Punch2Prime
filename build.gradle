@@ -20,6 +20,7 @@ buildscript {
 plugins {
 	id 'java-library'
 	id 'maven-publish'
+	id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 apply plugin: 'java'
@@ -81,15 +82,18 @@ configurations {
 	// Another list of dependencies to use with ProGaurd, as ForgeGradle isn't happy about resolving it the normal way.
 	// I'm not happy about it either.
 	proguardHack
+
+	shadowConfHack
 }
 
 dependencies {
 	minecraft "net.minecraftforge:forge:${project.forge_version}"
 
 	// Mixins
-	annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
-	compileOnly 'org.spongepowered:mixin:0.8.5'
-	proguardHack 'org.spongepowered:mixin:0.8.5'
+	annotationProcessor 'org.spongepowered:mixin:0.8.3:processor'
+	compileOnly 'org.spongepowered:mixin:0.8.3'
+	proguardHack 'org.spongepowered:mixin:0.8.3'
+	shadowConfHack 'org.spongepowered:mixin:0.8.3'
 }
 
 mixin {
@@ -218,10 +222,35 @@ jar {
 	}
 }
 
+// Create jar with bundled mixin library
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
+task optimisedShadowJar(type: ShadowJar) {
+	dependsOn(reobfOptimisedJar)
+
+	archiveClassifier.set("with-mixins")
+	from zipTree(optimisedJar.outputs.files.singleFile)
+	configurations = [project.configurations.shadowConfHack]
+
+	exclude 'META-INF/*.SF'
+	exclude 'META-INF/*.RSA'
+	exclude 'META-INF/*.MF'
+
+	manifest {
+		attributes([
+			"MixinConfigs": "punch2prime.mixins.json",
+			"MixinConnector": "com.github.NeRdTheNed.Punch2Prime.Connector",
+			"TweakClass": "org.spongepowered.asm.launch.MixinTweaker",
+			'ForceLoadAsMod': 'true'
+		])
+	}
+}
+
 // Creates the listed artifacts on building the mod.
 artifacts {
 	archives sourcesJar
 	archives optimisedJar
+	archives optimisedShadowJar
 }
 
 // TODO this is a bit dumb
