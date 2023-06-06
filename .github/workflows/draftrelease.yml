@@ -58,8 +58,8 @@ jobs:
       run: for file in ./build/libs/*.jar; do ./ci-tools/ect-ubuntu-x86-64 -9999 --disable-png --disable-jpg -strip -zip $file; done
     - name: Run advzip on shadow jar file
       run: advzip --shrink-extra -kzp tempbuild/*.jar
-    - name: Run advzip (-i 1) on shadow jar file
-      run: advzip --shrink-insane -kzi 1 -p tempbuild/*.jar
+    - name: Run advzip (-i 10) on shadow jar file
+      run: advzip --shrink-insane -kzi 10 -p tempbuild/*.jar
     - name: Run ECT on shadow jar file
       run: for file in ./tempbuild/*.jar; do ./ci-tools/ect-ubuntu-x86-64 --disable-png --disable-jpg -strip -zip $file; done
     - name: Run ECT (-9) on shadow jar file
