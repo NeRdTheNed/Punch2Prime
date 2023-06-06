@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockTNT;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
@@ -22,8 +23,8 @@ import net.minecraft.world.World;
 public abstract class TntBlockMixin extends Block {
 
 	// Dummy constructor, I'm not sure if this is how it's supposed to be done or if I'm bad at Mixins.
-	public TntBlockMixin() {
-		super(null);
+	public TntBlockMixin(Material mat) {
+		super(mat);
 	}
 
 	@Inject(method = "<init>()V", at = @At("RETURN"))
@@ -39,7 +40,6 @@ public abstract class TntBlockMixin extends Block {
 	}
 
 	// More Mixin hacks: always place TNT blocks with the EXPLODE state set to true
-	@Deprecated
 	@Override
 	public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
 		return getStateFromMeta(meta).withProperty(BlockTNT.EXPLODE, true);
