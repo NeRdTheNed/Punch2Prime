@@ -11,9 +11,17 @@
 #-adaptresourcefilecontents
 #-adaptresourcefilecontents **.MF
 
--keep public class com.github.NeRdTheNed.Punch2Prime.TntBlockMixin
+# Keep all methods that overrides a super method, or methods that are an event handler.
 
--keepclassmembers,allowoptimization,allowobfuscation public class com.github.NeRdTheNed.Punch2Prime.TntBlockMixin {
+-keepclassmembers,allowobfuscation class * {
+	@java.lang.Override,net.minecraftforge.fml.common.Mod$EventHandler <methods>;
+}
+
+-keep public class com.github.NeRdTheNed.Punch2Prime.Mixin.TntBlockMixin
+-keep public class com.github.NeRdTheNed.Punch2Prime.Punch2Prime
+-keep public class com.github.NeRdTheNed.Punch2Prime.Connector
+
+-keepclassmembers,allowoptimization,allowobfuscation public class com.github.NeRdTheNed.Punch2Prime.Mixin.TntBlockMixin {
 	private void init(org.spongepowered.asm.mixin.injection.callback.CallbackInfo);
 }
 

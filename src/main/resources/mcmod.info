@@ -1,0 +1,14 @@
+[
+    {
+        "authorList": [
+            "NeRd"
+        ],
+        "description": "A one-mixin mod to emulate pre-Beta 1.7 TNT behaviour!",
+        "logoFile": "icon.png",
+        "mcversion": "${mcversion}",
+        "modid": "punch2prime",
+        "name": "Punch 2 Prime",
+        "url": "https://github.com/NeRdTheNed/Punch2Prime",
+        "version": "${version}"
+    }
+]
