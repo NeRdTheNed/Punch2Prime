@@ -164,8 +164,8 @@ tasks.register('proguard', ProGuardTask) {
 	target "1.8"
 
 	// Use the non-remapped .jar as the input file, because ForgeGradle has a convenient task to map it to obfuscated Minecraft class names for us when we're done optimising it
-	injars "build/libs/" + rootProject.name + "-" + version + "-dev.jar"
-	outjars "build/libs/" + rootProject.name + "-" + version + "-proguard-dev.jar"
+	injars "build/libs/" + archivesBaseName + "-" + version + "-dev.jar"
+	outjars "build/libs/" + archivesBaseName + "-" + version + "-proguard-dev.jar"
 
 	// Get the location of rt.jar from the provided toolchain.
 	// Note to self: probably support building with not outdated versions of Java in the future.
