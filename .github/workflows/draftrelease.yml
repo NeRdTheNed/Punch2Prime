@@ -38,6 +38,8 @@ jobs:
       run: bash removeDirectoryEntries.sh
     - name: Run strip-nondeterminism on built .jar files
       run: strip-nondeterminism build/libs/*.jar
+    - name: Move shadow jar to temp folder
+      run: mkdir -p tempbuild && mv build/libs/*-with-mixins.jar tempbuild/
     - name: Run advzip (-i 99999) on built .jar files
       run: advzip --shrink-insane -kzi 99999 -p build/libs/*.jar
     - name: Run ECT on built .jar files
@@ -54,6 +56,20 @@ jobs:
       run: for file in ./build/libs/*.jar; do ./ci-tools/ect-ubuntu-x86-64 -90032 --disable-png --disable-jpg -strip -zip $file; done
     - name: Run ECT (-9999) on built .jar files
       run: for file in ./build/libs/*.jar; do ./ci-tools/ect-ubuntu-x86-64 -9999 --disable-png --disable-jpg -strip -zip $file; done
+    - name: Run advzip on shadow jar file
+      run: advzip --shrink-extra -kzp tempbuild/*.jar
+    - name: Run ECT on shadow jar file
+      run: for file in ./tempbuild/*.jar; do ./ci-tools/ect-ubuntu-x86-64 --disable-png --disable-jpg -strip -zip $file; done
+    - name: Run ECT (-9) on shadow jar file
+      run: for file in ./tempbuild/*.jar; do ./ci-tools/ect-ubuntu-x86-64 -9 --disable-png --disable-jpg -strip -zip $file; done
+    - name: Run ECT (-99) on shadow jar file
+      run: for file in ./tempbuild/*.jar; do ./ci-tools/ect-ubuntu-x86-64 -99 --disable-png --disable-jpg -strip -zip $file; done
+    - name: Run ECT (-30060) on shadow jar file
+      run: for file in ./tempbuild/*.jar; do ./ci-tools/ect-ubuntu-x86-64 -30060 --disable-png --disable-jpg -strip -zip $file; done
+    - name: Run ECT (-90032) on shadow jar file
+      run: for file in ./tempbuild/*.jar; do ./ci-tools/ect-ubuntu-x86-64 -90032 --disable-png --disable-jpg -strip -zip $file; done
+    - name: Move shadow jar to main folder
+      run: mv tempbuild/*.jar build/libs/
     - name: Draft release
       uses: softprops/action-gh-release@v1
       with:
