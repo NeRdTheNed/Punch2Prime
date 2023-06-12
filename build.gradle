@@ -16,6 +16,12 @@ plugins {
 	id 'maven-publish'
 }
 
+// https://docs.gradle.org/current/userguide/working_with_files.html#sec:reproducible_archives
+tasks.withType(AbstractArchiveTask).configureEach {
+	preserveFileTimestamps = false
+	reproducibleFileOrder = true
+}
+
 // Defines a Java 17 compatible JDK.
 def compiler = javaToolchains.compilerFor {
 	languageVersion = JavaLanguageVersion.of(17)
