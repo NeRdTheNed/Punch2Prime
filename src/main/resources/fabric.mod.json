@@ -9,6 +9,8 @@
     "NeRd"
   ],
   "contact": {
+    "homepage": "https://github.com/NeRdTheNed/Punch2Prime",
+    "issues": "https://github.com/NeRdTheNed/Punch2Prime/issues",
     "sources": "https://github.com/NeRdTheNed/Punch2Prime"
   },
 
@@ -17,5 +19,14 @@
 
   "mixins": [
     "punch2prime.mixins.json"
-  ]
+  ],
+
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.curseforge": "https://www.curseforge.com/minecraft/mc-mods/punch2prime",
+        "modmenu.modrinth": "https://modrinth.com/mod/punch2prime"
+      }
+    }
+  }
 }
