@@ -27,6 +27,8 @@ jobs:
       run: sudo apt-get install strip-nondeterminism
     - name: Install jq
       run: sudo apt-get install jq
+    - name: Validate Gradle wrapper
+      uses: gradle/wrapper-validation-action@v1
     - name: Build with Gradle
       uses: gradle/gradle-build-action@v2
       with:
